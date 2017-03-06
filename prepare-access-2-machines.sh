@@ -1,4 +1,5 @@
 #!/bin/bash
+
 export PUBLIC_KEY="/root/.ssh/id_rsa.pub"
 machines=$(docker-machine ls |grep -v NAME|awk '{print $1}')
 if [ ! -z "${machines}" ]; then
