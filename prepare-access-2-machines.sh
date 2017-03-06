@@ -11,7 +11,7 @@ if [ ! -z "${machines}" ]; then
 		sleep 1
 		echo "Unset server3_ip variable ${server3_ip} ..."
 		ssh-keygen -f "/root/.ssh/known_hosts" -R "${server3_ip}"
-	echo -e "Removes \033[1mDONE\033[1m"
+	echo -e "Removes are \033[1mDONE\033[1m"
 
 
 	echo -e "\033[1mUnset\033[0m variables: \033[1mserverX_ip serverX_cert\033[0m ..."
@@ -31,7 +31,7 @@ if [ ! -z "${machines}" ]; then
 	fi 
 	rm exportfile unsetfile
 	
-	echo -e "\033[1mUnsets done\033[0m"
+	echo -e "Unsets are \033[1mDONE\033[0m"
 
 
 	echo -e "\033[1mSets new values for server1...\033[0m"
@@ -46,7 +46,7 @@ if [ ! -z "${machines}" ]; then
 	export $(docker-machine env server3 |grep NAME|cut -f 2 -d"="|tr -d \")_ip=$(docker-machine env server3 |grep HOST|cut -f 3 -d"/"|cut -f 1 -d":")
 	export $(docker-machine env server3 |grep NAME|cut -f 2 -d"="|tr -d \")_cert=$(docker-machine env server3 |grep CERT|cut -f 2 -d"="|tr -d \")/id_rsa
 	echo "Server3: IP ${server3_ip} || CERT - ${server3_cert}"
-	echo -e "\033[1mSets DONE\033[0m"
+	echo -e "Sets are \033[1mDONE\033[0m"
 	
 	
 	echo -e "\033[1mCopying\033[0m id_rsa.pub to server1 ..."
@@ -65,7 +65,7 @@ if [ ! -z "${machines}" ]; then
 	echo "Adding id_rsa.pub to server3 /root/.ssh/authorized_keys ..."
 	ssh -i ${server3_cert} root@${server3_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); (grep -n ${PUB} /root/.ssh/authorized_keys) || cat /root/id_rsa.pub >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub;'
 	
-	echo -e "Prepare access \033[1mDONE\033[0m"
+	echo -e "Prepare access is \033[1mDONE\033[0m"
 	
 	echo "export server1_ip=${server1_ip}" > exportfile
 	echo "export server1_cert=${server1_cert}" >> exportfile
