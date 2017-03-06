@@ -8,6 +8,15 @@
 PRIVATE_KEY=~/.ssh/id_rsa
 SWARM_IP=192.168.1.1:8000
 
+delete-machines:
+	@(/bin/bash delete-machines.sh)
+
+create-machines:
+	@(/bin/bash create-machines.sh)
+
+prepare-access-2-machines:
+	@(/bin/bash prepare-access-2-machines.sh)
+
 first-run:
 	@(ansible-playbook -i stage site.yml -u root --private-key $(PRIVATE_KEY))
 
