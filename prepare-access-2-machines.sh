@@ -9,15 +9,10 @@ echo "Unset server2_ip variable ${server2_ip} ..."
 sleep 1
 echo "Unset server3_ip variable ${server3_ip} ..."
 	ssh-keygen -f "/root/.ssh/known_hosts" -R "${server3_ip}"
-echo -e "\033[1mRemoves done\033[1m"
+echo -e "Removes \033[1mDONE\033[1m"
 
 
-#echo "Unset server1_cert variable ..."
-#unset $(docker-machine env server1 |grep NAME|cut -f 2 -d"="|tr -d \")_cert
-#echo "Unset server2_cert variable ..."
-#unset $(docker-machine env server2 |grep NAME|cut -f 2 -d"="|tr -d \")_cert
-#echo "Unset server3_cert variable ..."
-#unset $(docker-machine env server3 |grep NAME|cut -f 2 -d"="|tr -d \")_cert
+echo -e "\033[1mUnset\033[0m variables: \033[1mserverX_ip serverX_cert\033[0m ..."
 
 if [ -s exportfile ]; then
 	cat exportfile|cut -f 1 -d"="|sed -e 's/^export/unset/g' > unsetfile
@@ -56,17 +51,17 @@ echo -e "\033[1mCopying\033[0m id_rsa.pub to server1 ..."
 echo -e "\033[1m At this step you may input YES to continue ...\033[0m"
 scp -i ${server1_cert} ${PUBLIC_KEY} root@${server1_ip}:/root/
 echo "Adding id_rsa.pub to server1 /root/.ssh/authorized_keys ..."
-ssh -i ${server1_cert} root@${server1_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); CHECK=$(grep -n ${PUB} /root/.ssh/authorized_keys); [ -z "${CHECK}" ] && ecbo "${PUB}" >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub'
+ssh -i ${server1_cert} root@${server1_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); (grep -n ${PUB} /root/.ssh/authorized_keys) || cat /root/id_rsa.pub >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub;'
 echo -e "\033[1mCopying\033[0m id_rsa.pub to server2 ..."
 echo -e "\033[1m At this step you may input YES to continue ...\033[0m"
 scp -i ${server2_cert} ${PUBLIC_KEY} root@${server2_ip}:/root/
 echo "Adding id_rsa.pub to server2 /root/.ssh/authorized_keys ..."
-ssh -i ${server2_cert} root@${server2_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); CHECK=$(grep -n ${PUB} /root/.ssh/authorized_keys); [ -z "${CHECK}" ] && ecbo "${PUB}" >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub'
+ssh -i ${server2_cert} root@${server2_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); (grep -n ${PUB} /root/.ssh/authorized_keys) || cat /root/id_rsa.pub >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub;'
 echo -e "\033[1mCopying\033[0m id_rsa.pub to server3 ..."
 echo -e "\033[1m At this step you may input YES to continue ...\033[0m"
 scp -i ${server3_cert} ${PUBLIC_KEY} root@${server3_ip}:/root/
 echo "Adding id_rsa.pub to server3 /root/.ssh/authorized_keys ..."
-ssh -i ${server3_cert} root@${server3_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); CHECK=$(grep -n ${PUB} /root/.ssh/authorized_keys); [ -z "${CHECK}" ] && ecbo "${PUB}" >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub'
+ssh -i ${server3_cert} root@${server3_ip} 'PUB=$(cat /root/id_rsa.pub|cut -f 3 -d" "); (grep -n ${PUB} /root/.ssh/authorized_keys) || cat /root/id_rsa.pub >> /root/.ssh/authorized_keys;rm /root/id_rsa.pub;'
 
 echo -e "Prepare access \033[1mDONE\033[0m"
 
